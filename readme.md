@@ -24,7 +24,7 @@ An extension layer for Laravel's Query Builder that registers portable, database
 ### Via Composer
 
 ```bash
-composer require hz/query-macro-helper
+composer require halimzidoune/query-macro-helper
 ```
 
 ### Service Provider Registration
