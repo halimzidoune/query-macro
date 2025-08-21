@@ -44,7 +44,7 @@ The package will auto-register, but if you need manual control, add this to your
 php artisan vendor:publish --tag=query-extensions
 ```
 
-## ✍️ Writing a custom macro (proposition)
+## ✍️ Writing a custom macro
 
 Use the generator, then implement driver-aware SQL as needed.
 
@@ -245,7 +245,7 @@ Below are the macros shipped with the package, grouped by category. Call these a
 
 ### 🔧 Available Macros
 
-#### `selectConcat(column1, column2, ...)`
+#### `selectConcat(result_alias, column1, ...)`
 Concatenates multiple columns or values with database-specific syntax.
 
 **Important**: Use `str()` helper for literal strings to distinguish them from column names.
