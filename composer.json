@@ -1,5 +1,5 @@
 {
-    "name": "hz/query-macro-helper",
+    "name": "halimzidoune/query-macro-helper",
     "description": "A Laravel package that extends the Query Builder, allowing you to create custom macros to work with different database drivers easily. Instead of using raw DB::raw() statements and checking the current driver each time, this package simplifies working with multiple databases. It makes your code cleaner, easier to read, and more organized, all while being fully compatible with all Laravel-supported database drivers.",
     "keywords": [
         "laravel", "string", "driver", "query", "string helper"
