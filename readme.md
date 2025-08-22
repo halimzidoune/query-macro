@@ -29,7 +29,7 @@ composer require halimzidoune/query-macro-helper
 
 ### Service Provider Registration
 
-The package will auto-register, but if you need manual control, add this to your `config/app.php`:
+Add this to your `config/app.php`:
 
 ```php
 'providers' => [
@@ -38,11 +38,17 @@ The package will auto-register, but if you need manual control, add this to your
 ],
 ```
 
-### Publishing Extensions (Optional)
 
-```bash
-php artisan vendor:publish --tag=query-extensions
+For laravel > 10 `bootstrap/providers.php`:
+
+```php
+return [
+    // ...
+    Hz\QueryMacroHelper\QueryMacroHelperServiceProvider::class,
+],
 ```
+
+
 
 ## ✍️ Writing a custom macro
 
