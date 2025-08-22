@@ -47,8 +47,15 @@ class EndOfWeek extends BaseMacro
     public function mysql($column, bool $endDay = true, ?string $format = null): string
     {
         $time = $endDay ? "23:59:59" : "00:00:00";
-        $expr = "DATE_ADD(DATE_ADD(DATE_SUB($column, INTERVAL (DAYOFWEEK($column) - 1 DAY), INTERVAL 6 DAY $time)";
-
+        
+        // Extract time components
+        list($hours, $minutes, $seconds) = explode(':', $time);
+        
+        $expr = "TIMESTAMP(
+            DATE(DATE_ADD($column, INTERVAL (7 - DAYOFWEEK($column)) DAY)),
+            MAKETIME($hours, $minutes, $seconds)
+        )";
+        
         return $this->formatExpression($expr, $format);
     }
 

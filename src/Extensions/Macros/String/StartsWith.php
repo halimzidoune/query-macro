@@ -4,6 +4,14 @@ namespace Hz\QueryMacroHelper\Extensions\Macros\String;
 
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
 
+/**
+ * Macro: selectStartsWith
+ * Purpose: Check if a string starts with a given prefix. Returns 1/0.
+ * Example:
+ *   - Given: name = "Alice"
+ *   - Usage: ->selectStartsWith('name as sw', 'Al')
+ *   - Result: sw = 1
+ */
 class StartsWith extends BaseMacro
 {
     public static function name(): string

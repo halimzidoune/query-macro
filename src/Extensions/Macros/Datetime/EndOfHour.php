@@ -19,6 +19,16 @@ class EndOfHour extends BaseMacro
         return $this->formatExpression("TRUNC($column, 'HH24') + INTERVAL '59:59' MINUTE TO SECOND", $format);
     }
 
+    public function mysql($column, ?string $format = null): string
+    {
+        $expr = "DATE_ADD(
+            DATE_FORMAT($column, '%Y-%m-%d %H:00:00'),
+            INTERVAL 3599 SECOND
+        )";
+        
+        return $this->formatExpression($expr, $format);
+    }
+
     public function sqlite($column, ?string $format = null): string
     {
         $expr = "DATETIME($column, 'start of hour', '+59 minutes', '+59 seconds')";

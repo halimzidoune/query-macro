@@ -21,10 +21,12 @@ class StartOfWeek extends BaseMacro
     }
 
     public function mysql($column, ?string $format = null): string
-    {
-        $result = "DATE_SUB($column, INTERVAL (DAYOFWEEK($column) - 2 DAY)";
-        return $this->formatExpression($result, $format);
-    }
+{
+    // Calculate days to subtract to get Monday
+    // (DAYOFWEEK returns 1=Sunday, 2=Monday, ..., 7=Saturday)
+    $result = "DATE_SUB($column, INTERVAL ((DAYOFWEEK($column) + 5) % 7) DAY)";
+    return $this->formatExpression($result, $format);
+}
 
     public function pgsql($column, ?string $format = null): string
     {

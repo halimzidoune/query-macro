@@ -17,10 +17,6 @@ class SelectFloat extends BaseMacro
         return 'selectFloat';
     }
 
-    public function mysql($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
-    {
-        return $this->defaultExpression($column, $precision, $scale);
-    }
 
     public function defaultExpression($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
     {
@@ -45,5 +41,11 @@ class SelectFloat extends BaseMacro
     public function sqlite($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
     {
         return "CAST($column AS REAL)"; // SQLite doesn't support precision/scale in CAST
+    }
+
+    public function mysql($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
+    {
+        $decimal = "(CAST($column AS DECIMAL($precision, $scale)))";
+        return "CAST($decimal AS DOUBLE)";
     }
 }

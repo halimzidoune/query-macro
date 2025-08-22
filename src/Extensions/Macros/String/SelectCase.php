@@ -4,6 +4,14 @@ namespace Hz\QueryMacroHelper\Extensions\Macros\String;
 
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
 
+/**
+ * Macro: selectCase
+ * Purpose: Map specific input values to outputs via SQL CASE, with optional default.
+ * Example:
+ *   - Given: designation = "Manager"
+ *   - Usage: ->selectCase('designation as label', ['Manager' => 'MGR', 'Dev' => 'DEV'], 'OTHER')
+ *   - Result: label = "MGR"
+ */
 class SelectCase extends BaseMacro
 {
     public static function name(): string

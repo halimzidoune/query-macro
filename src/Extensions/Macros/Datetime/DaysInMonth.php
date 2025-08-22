@@ -16,6 +16,11 @@ class DaysInMonth extends BaseMacro
         return "EXTRACT(DAY FROM (DATE_TRUNC('month', $column) + INTERVAL '1 month' - INTERVAL '1 day'))";
     }
 
+    public function mysql($column): string
+    {
+        return "DAY(LAST_DAY($column))";
+    }
+    
     public function oracle($column): string
     {
         return "EXTRACT(DAY FROM LAST_DAY($column))";

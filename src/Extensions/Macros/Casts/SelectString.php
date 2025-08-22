@@ -5,8 +5,12 @@ namespace Hz\QueryMacroHelper\Extensions\Macros\Casts;
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
 
 /**
- * SelectCastToString - Converts values to string type
- * Example: CAST(123 AS VARCHAR)
+ * Macro: selectString
+ * Purpose: Cast a value to string.
+ * Example:
+ *   - Given: count = 5
+ *   - Usage: ->selectString('count as s')
+ *   - Result: s = "5"
  */
 class SelectString extends BaseMacro
 {

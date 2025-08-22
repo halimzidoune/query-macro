@@ -5,6 +5,14 @@ namespace Hz\QueryMacroHelper\Extensions\Macros\String;
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
 use Illuminate\Support\Stringable;
 
+/**
+ * Macro: selectConcat
+ * Purpose: Concatenate columns and literals into a single string across drivers.
+ * Example:
+ *   - Given: name = "Alice", designation = "Manager"
+ *   - Usage: ->selectConcat('full_label', 'name', str(' - '), 'designation')
+ *   - Result: full_label = "Alice - Manager"
+ */
 class Concat extends BaseMacro
 {
     public function hasColumn(): bool

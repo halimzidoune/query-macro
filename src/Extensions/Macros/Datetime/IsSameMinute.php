@@ -18,4 +18,9 @@ class IsSameMinute extends BaseMacro
     {
         return "STRFTIME('%Y-%m-%d %H:%M', $column1) = STRFTIME('%Y-%m-%d %H:%M', $column2)";
     }
+
+    public function mysql($column1, $column2): string
+    {
+        return "MINUTE($column1) = MINUTE($column2)";
+    }
 }

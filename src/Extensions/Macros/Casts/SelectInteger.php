@@ -6,8 +6,12 @@ namespace Hz\QueryMacroHelper\Extensions\Macros\Casts;
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
 
 /**
- * SelectCastToInt - Converts values to integer type
- * Example: CAST('123' AS INTEGER)
+ * Macro: selectInteger
+ * Purpose: Cast a value to integer.
+ * Example:
+ *   - Given: designation = "1"
+ *   - Usage: ->selectInteger('designation as i')
+ *   - Result: i = 1
  */
 class SelectInteger extends BaseMacro
 {

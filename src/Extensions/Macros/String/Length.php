@@ -4,6 +4,14 @@ namespace Hz\QueryMacroHelper\Extensions\Macros\String;
 
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
 
+/**
+ * Macro: selectLength
+ * Purpose: Get length of a string column.
+ * Example:
+ *   - Given: name = "Alice"
+ *   - Usage: ->selectLength('name as len')
+ *   - Result: len = 5
+ */
 class Length extends BaseMacro
 {
 
