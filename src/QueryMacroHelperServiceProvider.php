@@ -55,6 +55,11 @@ class QueryMacroHelperServiceProvider extends ServiceProvider
 
                 // Register for Query\Builder
                 \Illuminate\Database\Query\Builder::macro($macroName, function (...$args) use ($instance, $driver) {
+                    // Ensure base columns are selected if none are set yet
+                    if (empty($this->columns)) {
+                        $this->select($this->from . '.*');
+                    }
+
                     if ($instance->hasColumn()) {
                         $column = $args[0];
                         $parts = explode(' as ', $column);
@@ -67,17 +72,42 @@ class QueryMacroHelperServiceProvider extends ServiceProvider
                         }
                         $args[0] = $column;
                         $expression = $instance->getExpression($driver, ...$args);
-                        return $this->selectRaw("{$expression} AS {$alias}");
+                        return $this->addSelect(DB::raw("{$expression} AS {$alias}"));
                     } else {
                         $expression = $instance->getExpression($driver, ...$args);
-                        return $this->selectRaw("{$expression}");
+                        return $this->addSelect(DB::raw("{$expression}"));
                     }
 
                 });
 
                 // Register for Eloquent\Builder
-                \Illuminate\Database\Eloquent\Builder::macro($macroName, function (...$args) use ($macroName) {
-                    return $this->toBase()->{$macroName}(...$args);
+                \Illuminate\Database\Eloquent\Builder::macro($macroName, function (...$args) use ($instance, $driver) {
+                    $baseQuery = $this->getQuery();
+
+                    // Ensure base columns are selected if none are set yet
+                    if (empty($baseQuery->columns)) {
+                        $baseQuery->select($baseQuery->from . '.*');
+                    }
+
+                    if ($instance->hasColumn()) {
+                        $column = $args[0];
+                        $parts = explode(' as ', $column);
+                        $column = $parts[0];
+
+                        if (count($parts) > 1) {
+                            $alias = $parts[1];
+                        } else {
+                            $alias = $column . '_' . str(class_basename($instance))->snake('_');
+                        }
+                        $args[0] = $column;
+                        $expression = $instance->getExpression($driver, ...$args);
+                        $this->getQuery()->addSelect(DB::raw("{$expression} AS {$alias}"));
+                    } else {
+                        $expression = $instance->getExpression($driver, ...$args);
+                        $this->getQuery()->addSelect(DB::raw("{$expression}"));
+                    }
+
+                    return $this;
                 });
             }
         }
