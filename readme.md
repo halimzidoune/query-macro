@@ -1,5 +1,7 @@
 # Laravel Query Macro Helper
 
+<img src="https://github.com/halimzidoune/query-macro/blob/main/query_macro.png" width="100%" />
+
 An extension layer for Laravel's Query Builder that registers portable, database-aware select macros. Write expressive `select...` helpers once and they will render the correct SQL for MySQL, PostgreSQL, SQLite, SQL Server, and Oracle—without `DB::raw()` or driver conditionals.
 
 ## 🚀 Features
