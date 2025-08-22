@@ -37,7 +37,7 @@ class SelectBoolean extends BaseMacro
 
     public function oracle($column): string
     {
-        return "CASE WHEN $column THEN 1 ELSE 0 END";
+        return "CASE WHEN $column = 1 OR LOWER($column) IN ('true', 't', 'yes', 'y', 'on') THEN 1 ELSE 0 END";
     }
 
     public function sqlite($column, ?string $alias = null): string

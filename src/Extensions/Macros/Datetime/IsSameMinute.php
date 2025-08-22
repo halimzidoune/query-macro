@@ -23,4 +23,9 @@ class IsSameMinute extends BaseMacro
     {
         return "MINUTE($column1) = MINUTE($column2)";
     }
+
+    public function oracle($column1, $column2): string
+    {
+        return "CASE WHEN TRUNC($column1, 'MI') = TRUNC($column2, 'MI') THEN 1 ELSE 0 END";
+    }
 }

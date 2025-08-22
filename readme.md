@@ -50,7 +50,11 @@ return [
 ],
 ```
 
+It's recomended to add the line in the `AppSeriveProvider@boot` for a better cast: 
 
+```php
+DB::connection()->getPdo()->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+```
 
 ## ✍️ Writing a custom macro
 

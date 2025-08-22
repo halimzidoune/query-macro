@@ -27,4 +27,9 @@ class IsSameYear extends BaseMacro
     {
         return "STRFTIME('%Y-%m-%d %H', $column1) = STRFTIME('%Y-%m-%d %H', $column2)";
     }
+
+    public function oracle($column1, $column2): string
+    {
+        return "CASE WHEN EXTRACT(YEAR FROM $column1) = EXTRACT(YEAR FROM $column2) THEN 1 ELSE 0 END";
+    }
 }

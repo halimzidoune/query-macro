@@ -33,7 +33,12 @@ class DiffInMinutes extends BaseMacro
 
     public function oracle($column1, $column2): string
     {
-        return "($column2 - $column1) * 24 * 60";
+        return "ROUND(
+            (EXTRACT(DAY FROM ($column2 - $column1)) * 1440) + 
+            (EXTRACT(HOUR FROM ($column2 - $column1)) * 60) + 
+            EXTRACT(MINUTE FROM ($column2 - $column1)) +
+            (EXTRACT(SECOND FROM ($column2 - $column1)) / 60)
+        )";
     }
 
     public function sqlite($column1, $column2): string

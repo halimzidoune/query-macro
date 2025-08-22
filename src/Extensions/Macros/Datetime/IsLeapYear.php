@@ -33,4 +33,14 @@ class IsLeapYear extends BaseMacro
             OR CAST(STRFTIME('%Y', $column) AS INTEGER) % 400 = 0))";
     }
 
+    public function oracle($column): string
+    {
+        return "(CASE 
+                WHEN (MOD(EXTRACT(YEAR FROM $column), 4) = 0 
+                      AND (MOD(EXTRACT(YEAR FROM $column), 100) != 0 
+                           OR MOD(EXTRACT(YEAR FROM $column), 400) = 0)) 
+                THEN 1 
+                ELSE 0 
+            END)";
+    }
 }

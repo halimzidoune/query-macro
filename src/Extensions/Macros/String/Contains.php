@@ -38,4 +38,18 @@ class Contains extends BaseMacro
     {
         return "CHARINDEX('$value', $column) > 0";
     }
+
+    public function oracle($column, $value): string
+    {
+        $escapedValue = $this->escapeValue($value);
+        return "CASE WHEN INSTR(UPPER($column), UPPER('$escapedValue')) > 0 THEN 1 ELSE 0 END";
+    }
+    /**
+     * Escape value to prevent SQL injection
+     */
+    protected function escapeValue($value): string
+    {
+        return str_replace("'", "''", $value);
+    }
+
 }

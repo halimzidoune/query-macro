@@ -157,9 +157,36 @@ class FormatDate extends BaseMacro
      */
     protected function convertToOracleFormat(string $carbonFormat): string
     {
-        // Oracle format is very similar to PostgreSQL
-        return $this->convertToPostgresFormat($carbonFormat);
+        $map = [
+            // Day
+            'd' => 'DD',        // Day of the month, 2 digits with leading zeros
+            'D' => 'DY',        // Abbreviated uppercase day name (e.g., MON, TUE)
+            'j' => 'DD',        // Day of the month without leading zeros
+            'l' => 'DAY',       // Full uppercase day name (e.g., MONDAY)
+            // Month
+            'F' => 'MONTH',     // Full uppercase month name (e.g., JANUARY)
+            'm' => 'MM',        // Month number with leading zeros
+            'M' => 'MON',       // Abbreviated uppercase month name (e.g., JAN)
+            'n' => 'MM',        // Month number without leading zeros
+            // Year
+            'Y' => 'YYYY',      // 4-digit year
+            'y' => 'YY',        // 2-digit year
+            // Time
+            'a' => 'AM',        // AM/PM indicator (lowercase)
+            'A' => 'AM',        // AM/PM indicator (uppercase)
+            'g' => 'HH12',      // 12-hour format without leading zeros
+            'G' => 'HH24',      // 24-hour format without leading zeros
+            'h' => 'HH12',      // 12-hour format with leading zeros
+            'H' => 'HH24',      // 24-hour format with leading zeros
+            'i' => 'MI',        // Minutes
+            's' => 'SS',        // Seconds
+            // Other
+            'u' => 'FF6',       // Microseconds (6 digits)
+        ];
+
+        return strtr($carbonFormat, $map);
     }
+
 
     /**
      * Convert Carbon format to SQLite strftime specifiers

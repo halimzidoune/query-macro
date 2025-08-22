@@ -41,6 +41,13 @@ class StartsWith extends BaseMacro
 
     public function oracle($column, $value): string
     {
-        return "REGEXP_LIKE($column, '^$value')";
+        $escapedValue = $this->escapeValue($value);
+        // Use CASE statement to convert boolean to number
+        return "CASE WHEN REGEXP_LIKE($column, '^$escapedValue') THEN 1 ELSE 0 END";
+    }
+
+    protected function escapeValue($value): string
+    {
+        return str_replace("'", "''", $value);
     }
 }

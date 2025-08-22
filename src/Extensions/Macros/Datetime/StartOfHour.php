@@ -30,4 +30,9 @@ class StartOfHour extends BaseMacro
         $expr = "STRFTIME('%Y-%m-%d %H:00:00', $column)";
         return $this->formatExpression($expr, $format);
     }
+
+    public function oracle($column, ?string $format = null): string
+    {
+        return $this->formatExpression("TRUNC($column, 'HH24')", $format);
+    }
 }

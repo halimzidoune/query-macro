@@ -18,7 +18,7 @@ class IsSameHour extends BaseMacro
 
     public function oracle($column1, $column2): string
     {
-        return "TRUNC($column1, 'HH24') = TRUNC($column2, 'HH24')";
+        return "CASE WHEN TRUNC($column1, 'HH24') = TRUNC($column2, 'HH24') THEN 1 ELSE 0 END";
     }
 
     public function sqlite($column1, $column2): string

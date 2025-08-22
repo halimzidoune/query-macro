@@ -39,4 +39,10 @@ class Length extends BaseMacro
     {
         return "LEN($column)";
     }
+
+
+    public function oracle($column): string
+    {
+        return "CAST(LENGTH({$column}) AS INTEGER)";
+    }
 }

@@ -3,6 +3,7 @@
 namespace Hz\QueryMacroHelper\Extensions\Macros\Casts;
 
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
+use Hz\QueryMacroHelper\Extensions\Macros\Datetime\FormatDate;
 
 /**
  * SelectCastToDate - Converts values to date type
@@ -37,7 +38,7 @@ class SelectDate extends BaseMacro
 
     public function oracle($column): string
     {
-        return "TO_DATE($column, 'YYYY-MM-DD')";
+        return FormatDate::make()->getExpression($this->driver, "TRUNC($column)", "Y-m-d");
     }
 
     public function sqlite($column): string

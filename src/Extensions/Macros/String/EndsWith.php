@@ -38,14 +38,25 @@ class EndsWith extends BaseMacro
         return "$column LIKE '%$value'";
     }
 
-    public function oracle($column, $value): string
-    {
-        return "REGEXP_LIKE($column, '$value$') OR " .
-            "(SUBSTR($column, -" . strlen($value) . ") = '$value' AND $column IS NOT NULL)";
-    }
-
     public function sqlite($column, $value): string
     {
         return "$column GLOB '*$value'";
+    }
+
+    public function oracle($column, $value): string
+    {
+        $escapedValue = $this->escapeValue($value);
+        $length = strlen($value);
+
+        return "CASE 
+            WHEN $column IS NULL THEN 0
+            WHEN UPPER(SUBSTR($column, -$length)) = UPPER('$escapedValue') THEN 1 
+            ELSE 0 
+        END";
+    }
+    
+    protected function escapeValue($value): string
+    {
+        return str_replace("'", "''", $value);
     }
 }

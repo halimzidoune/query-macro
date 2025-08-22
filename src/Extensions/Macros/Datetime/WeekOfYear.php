@@ -30,4 +30,9 @@ class WeekOfYear extends BaseMacro
     {
         return "CAST(STRFTIME('%W', $column) AS INTEGER)";
     }
+
+    public function oracle($column): string
+    {
+        return "TO_NUMBER(TO_CHAR($column, 'IW'))";
+    }
 }

@@ -33,7 +33,7 @@ class IsSameDay extends BaseMacro
 
     public function oracle($column1, $column2): string
     {
-        return "TRUNC($column1) = TRUNC($column2)";
+        return "CASE WHEN TRUNC($column1) = TRUNC($column2) THEN 1 ELSE 0 END";
     }
 
     public function sqlite($column1, $column2): string

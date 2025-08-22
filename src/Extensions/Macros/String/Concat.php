@@ -108,5 +108,19 @@ class Concat extends BaseMacro
         return $expr . ' AS ' . $alias;
     }
 
+    public function oracle($alias, ...$args): string
+    {
+        $pieces = $this->getPiecesFromArgs($args);
+
+        if (count($pieces) <= 2) {
+            // Oracle can handle up to 2 arguments
+            return 'CONCAT(' . implode(', ', $pieces) . ') AS ' . $alias;
+        } else {
+            // For more than 2 arguments, use || operator (recommended)
+            return implode(' || ', $pieces) . ' AS ' . $alias;
+
+        }
+    }
+
 
 }

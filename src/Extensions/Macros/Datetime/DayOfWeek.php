@@ -36,9 +36,13 @@ class DayOfWeek extends BaseMacro
         return "DATEPART(WEEKDAY, $column)";
     }
 
-    public function oracle($column): string
+    public function oracle($column, $map = null): string
     {
-        return "TO_CHAR($column, 'D')";
+        $result = "CAST(TO_CHAR($column, 'D') AS INTEGER)";
+        if($map){
+            $result = SelectCase::make()->getExpression($this->driver, $result, $map);
+        }
+        return $result;
     }
 
     public function sqlite($column, $map = null): string
