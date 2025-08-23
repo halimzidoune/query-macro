@@ -3,6 +3,7 @@
 namespace Hz\QueryMacroHelper\Extensions\Macros\String;
 
 use Hz\QueryMacroHelper\Extensions\BaseMacro;
+use Hz\QueryMacroHelper\Extensions\Macros\Casts\SelectInteger;
 
 /**
  * Macro: selectLength
@@ -39,7 +40,6 @@ class Length extends BaseMacro
     {
         return "LEN($column)";
     }
-
 
     public function oracle($column): string
     {

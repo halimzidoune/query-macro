@@ -16,10 +16,7 @@ class Pad extends BaseMacro
         return 'selectPad';
     }
 
-    public function pgsql($column, $length, $padString = ' ', $type = 'left'): string
-    {
-        return $this->mysql($column, $length, $padString, $type);
-    }
+
 
     public function mysql($column, $length, $padString = ' ', $type = 'left'): string
     {
@@ -60,4 +57,14 @@ class Pad extends BaseMacro
             ? "SUBSTR($pad || $column, -$length)"
             : "SUBSTR($column || $pad, 1, $length)";
     }
+
+    public function pgsql($column, $length, $padString = ' ', $type = 'left'): string
+    {
+        // Convertir explicitement en texte pour PostgreSQL
+        $column = "CAST($column AS TEXT)";
+        return $type === 'left'
+            ? $this->left($column, $length, $padString)
+            : $this->right($column, $length, $padString);
+    }
+
 }

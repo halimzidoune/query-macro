@@ -43,4 +43,5 @@ class IsLeapYear extends BaseMacro
                 ELSE 0 
             END)";
     }
+
 }

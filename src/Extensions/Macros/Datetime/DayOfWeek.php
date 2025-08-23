@@ -26,9 +26,13 @@ class DayOfWeek extends BaseMacro
         return $result;
     }
 
-    public function pgsql($column): string
+    public function pgsql($column, $map = null): string
     {
-        return "EXTRACT(DOW FROM $column) + 1";
+        $result = "EXTRACT(DOW FROM $column) + 1";
+        if($map){
+            $result = SelectCase::make()->getExpression($this->driver, $result, $map);
+        }
+        return $result;
     }
 
     public function sqlsrv($column): string

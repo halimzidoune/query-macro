@@ -16,6 +16,11 @@ class WeekOfYear extends BaseMacro
         return "EXTRACT(WEEK FROM $column)";
     }
 
+    public function pgsql($column): string
+    {
+        return "FLOOR(EXTRACT(WEEK FROM $column))::integer";
+    }
+
     public function mysql($column): string
     {
         return "WEEK($column, 3)"; // ISO week

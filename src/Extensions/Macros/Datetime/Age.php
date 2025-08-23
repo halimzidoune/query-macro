@@ -28,7 +28,7 @@ class Age extends BaseMacro
     public function pgsql($column, $reference = null): string
     {
         $ref = $this->normalizeReference($reference) ?: 'CURRENT_DATE';
-        return "EXTRACT(YEAR FROM AGE($ref, $column))";
+        return "FLOOR(EXTRACT(YEAR FROM AGE($ref, $column)))::integer";
     }
 
     public function sqlsrv($column, $reference = null): string

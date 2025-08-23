@@ -28,4 +28,6 @@ class IsSameMinute extends BaseMacro
     {
         return "CASE WHEN TRUNC($column1, 'MI') = TRUNC($column2, 'MI') THEN 1 ELSE 0 END";
     }
+
+
 }

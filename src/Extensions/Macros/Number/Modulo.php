@@ -23,7 +23,7 @@ class Modulo extends BaseMacro
 
     public function pgsql($dividend, $divisor): string
     {
-        return "$dividend % $divisor";
+        return "($dividend::numeric % $divisor::numeric)::numeric";
     }
 
     public function sqlsrv($dividend, $divisor): string

@@ -38,6 +38,8 @@ class EndsWith extends BaseMacro
         return "$column LIKE '%$value'";
     }
 
+
+
     public function sqlite($column, $value): string
     {
         return "$column GLOB '*$value'";
@@ -54,7 +56,7 @@ class EndsWith extends BaseMacro
             ELSE 0 
         END";
     }
-    
+
     protected function escapeValue($value): string
     {
         return str_replace("'", "''", $value);

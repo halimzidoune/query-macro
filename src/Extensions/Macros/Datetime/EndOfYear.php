@@ -43,11 +43,11 @@ class EndOfYear extends BaseMacro
     public function oracle($column, bool $endTime = true, ?string $format = null): string
     {
         $expr = "ADD_MONTHS(TRUNC($column, 'YEAR'), 12) - INTERVAL '1' DAY";
-        
+
         if ($endTime) {
             $expr = "$expr + INTERVAL '23:59:59' HOUR TO SECOND";
         }
-        
+
         return $this->formatExpression($expr, $format);
     }
 }

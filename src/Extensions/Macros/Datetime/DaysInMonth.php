@@ -30,4 +30,9 @@ class DaysInMonth extends BaseMacro
     {
         return "CAST(STRFTIME('%d', DATE($column, 'start of month', '+1 month', '-1 day')) AS INTEGER)";
     }
+
+    public function pgsql($column): string
+    {
+        return "FLOOR(EXTRACT(DAY FROM (DATE_TRUNC('month', $column) + INTERVAL '1 month' - INTERVAL '1 day')))::integer";
+    }
 }

@@ -23,10 +23,6 @@ class SelectFloat extends BaseMacro
         return "CAST($column AS DECIMAL($precision,$scale))";
     }
 
-    public function pgsql($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
-    {
-        return "CAST($column AS NUMERIC($precision,$scale))";
-    }
 
     public function sqlsrv($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
     {
@@ -47,5 +43,11 @@ class SelectFloat extends BaseMacro
     {
         $decimal = "(CAST($column AS DECIMAL($precision, $scale)))";
         return "CAST($decimal AS DOUBLE)";
+    }
+
+    public function pgsql($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
+    {
+        // Utiliser une fonction PostgreSQL qui retourne toujours float
+        return "TRUNC($column::numeric($precision,$scale) + 0.0, $scale)::double precision";
     }
 }

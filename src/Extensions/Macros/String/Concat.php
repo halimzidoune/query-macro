@@ -15,39 +15,14 @@ use Illuminate\Support\Stringable;
  */
 class Concat extends BaseMacro
 {
-    public function hasColumn(): bool
-    {
-        return false;
-    }
-
     public static function name(): string
     {
         return 'selectConcat';
     }
 
-    protected function getPiecesFromArgs($args): array
+    public function hasColumn(): bool
     {
-        $pieces = [];
-        for ($i = 0; $i < count($args); $i++) {
-            if(is_string($args[$i])){
-                $pieces[] = $args[$i];
-            }elseif($args[$i] instanceof  Stringable){
-                $pieces[] = "'".$args[$i]."'";
-            }
-        }
-        return $pieces;
-    }
-
-    /**
-     * Default expression - assumes MySQL style CONCAT syntax.
-     *
-     * @param string $alias
-     * @param mixed ...$args
-     * @return string
-     */
-    public function defaultExpression($alias, ...$args): string
-    {
-        return 'CONCAT(' . implode(', ', $this->getPiecesFromArgs($args)) . ') AS ' . $alias;
+        return false;
     }
 
     /**
@@ -62,6 +37,19 @@ class Concat extends BaseMacro
         return implode(' || ', $this->getPiecesFromArgs($args)) . ' AS ' . $alias;
     }
 
+    protected function getPiecesFromArgs($args): array
+    {
+        $pieces = [];
+        for ($i = 0; $i < count($args); $i++) {
+            if (is_string($args[$i])) {
+                $pieces[] = $args[$i];
+            } elseif ($args[$i] instanceof Stringable) {
+                $pieces[] = "'" . $args[$i] . "'";
+            }
+        }
+        return $pieces;
+    }
+
     /**
      * MySQL concatenation using CONCAT.
      *
@@ -72,6 +60,18 @@ class Concat extends BaseMacro
     public function mysql($alias, ...$args): string
     {
         return $this->defaultExpression($alias, ...$args);
+    }
+
+    /**
+     * Default expression - assumes MySQL style CONCAT syntax.
+     *
+     * @param string $alias
+     * @param mixed ...$args
+     * @return string
+     */
+    public function defaultExpression($alias, ...$args): string
+    {
+        return 'CONCAT(' . implode(', ', $this->getPiecesFromArgs($args)) . ') AS ' . $alias;
     }
 
     /**
@@ -121,6 +121,5 @@ class Concat extends BaseMacro
 
         }
     }
-
 
 }

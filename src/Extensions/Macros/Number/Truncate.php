@@ -28,7 +28,7 @@ class Truncate extends BaseMacro
 
     public function pgsql($column, int $precision = 0): string
     {
-        return "TRUNC($column, $precision)";
+        return "TRUNC($column::numeric, $precision)";
     }
 
     public function sqlsrv($column, int $precision = 0): string

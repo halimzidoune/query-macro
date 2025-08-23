@@ -11,11 +11,6 @@ class DiffInMinutes extends BaseMacro
         return 'selectDiffInMinutes';
     }
 
-    public function defaultExpression($column1, $column2): string
-    {
-        return "EXTRACT(EPOCH FROM ($column2 - $column1)) / 60";
-    }
-
     public function mysql($column1, $column2): string
     {
         return "TIMESTAMPDIFF(MINUTE, $column1, $column2)";
@@ -23,7 +18,7 @@ class DiffInMinutes extends BaseMacro
 
     public function pgsql($column1, $column2): string
     {
-        return "EXTRACT(EPOCH FROM ($column2 - $column1)) / 60";
+        return "FLOOR(EXTRACT(EPOCH FROM ($column2 - $column1)) / 60)::integer";
     }
 
     public function sqlsrv($column1, $column2): string
@@ -46,10 +41,16 @@ class DiffInMinutes extends BaseMacro
         return "(strftime('%s', $column2) - strftime('%s', $column1)) / 60";
     }
 
-    // Optional: Add precision parameter
     public function withPrecision($column1, $column2, int $decimals = 0): string
     {
         $divisor = $decimals > 0 ? "::numeric(20,$decimals)" : "";
         return "ROUND((" . $this->defaultExpression($column1, $column2) . ")$divisor)";
+    }
+
+    // Optional: Add precision parameter
+
+    public function defaultExpression($column1, $column2): string
+    {
+        return "EXTRACT(EPOCH FROM ($column2 - $column1)) / 60";
     }
 }
