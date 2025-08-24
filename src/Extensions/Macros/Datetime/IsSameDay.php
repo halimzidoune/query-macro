@@ -28,7 +28,7 @@ class IsSameDay extends BaseMacro
 
     public function sqlsrv($column1, $column2): string
     {
-        return "CAST($column1 AS DATE) = CAST($column2 AS DATE)";
+        return "CASE WHEN CAST($column1 AS DATE) = CAST($column2 AS DATE) THEN 1 ELSE 0 END";
     }
 
     public function oracle($column1, $column2): string

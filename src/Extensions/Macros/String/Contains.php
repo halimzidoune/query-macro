@@ -36,7 +36,8 @@ class Contains extends BaseMacro
 
     public function sqlsrv($column, $value): string
     {
-        return "CHARINDEX('$value', $column) > 0";
+        $escapedValue = $this->escapeValue($value);
+        return "CASE WHEN CHARINDEX('$escapedValue', $column) > 0 THEN 1 ELSE 0 END";
     }
 
     public function oracle($column, $value): string

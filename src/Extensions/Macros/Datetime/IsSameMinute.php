@@ -29,5 +29,10 @@ class IsSameMinute extends BaseMacro
         return "CASE WHEN TRUNC($column1, 'MI') = TRUNC($column2, 'MI') THEN 1 ELSE 0 END";
     }
 
+    public function sqlsrv($column1, $column2): string
+    {
+        return "CASE WHEN FORMAT($column1, 'yyyy-MM-dd HH:mm') = FORMAT($column2, 'yyyy-MM-dd HH:mm') THEN 1 ELSE 0 END";
+    }
+
 
 }

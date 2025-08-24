@@ -67,10 +67,13 @@ class EndOfDay extends BaseMacro
     /**
      * SQL Server implementation
      */
+    /**
+     * SQL Server implementation - FIXED: Added missing closing parenthesis
+     */
     public function sqlsrv($column, bool $endTime = true, ?string $format = null): string
     {
         $expr = $endTime
-            ? "DATEADD(SECOND, -1, DATEADD(DAY, 1, CAST(CAST($column AS DATE) AS DATETIME))"
+            ? "DATEADD(SECOND, -1, DATEADD(DAY, 1, CAST(CAST($column AS DATE) AS DATETIME)))"
             : "DATEADD(DAY, 1, CAST(CAST($column AS DATE) AS DATETIME))";
 
         return $this->formatExpression($expr, $format);

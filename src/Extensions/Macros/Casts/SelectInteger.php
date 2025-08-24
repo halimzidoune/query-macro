@@ -37,7 +37,7 @@ class SelectInteger extends BaseMacro
 
     public function sqlsrv($column): string
     {
-        return "CAST($column AS INT)";
+        return "CAST($column AS INT) + 0";
     }
 
     public function oracle($column): string

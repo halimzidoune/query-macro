@@ -23,7 +23,13 @@ class IsLeapYear extends BaseMacro
 
     public function sqlsrv($column): string
     {
-        return "(YEAR($column) % 4 = 0 AND (YEAR($column) % 100 != 0 OR YEAR($column) % 400 = 0))";
+        return "CASE 
+            WHEN (YEAR($column) % 4 = 0 
+                  AND (YEAR($column) % 100 != 0 
+                       OR YEAR($column) % 400 = 0)) 
+            THEN 1 
+            ELSE 0 
+        END";
     }
 
     public function sqlite($column): string

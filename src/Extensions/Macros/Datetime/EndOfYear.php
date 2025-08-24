@@ -27,8 +27,11 @@ class EndOfYear extends BaseMacro
 
     public function sqlsrv($column, bool $endTime = true, ?string $format = null): string
     {
-        $expr = "DATEFROMPARTS(YEAR($column), 12, 31)";
-        $expr = $endTime ? "DATEADD(SECOND, -1, DATEADD(DAY, 1, $expr))" : $expr;
+        if ($endTime) {
+            $expr = "DATETIMEFROMPARTS(YEAR($column), 12, 31, 23, 59, 59, 0)";
+        } else {
+            $expr = "DATEFROMPARTS(YEAR($column), 12, 31)";
+        }
         return $this->formatExpression($expr, $format);
     }
 

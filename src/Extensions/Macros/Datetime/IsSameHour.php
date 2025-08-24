@@ -30,4 +30,12 @@ class IsSameHour extends BaseMacro
     {
         return "HOUR($column1) = HOUR($column2)";
     }
+
+
+    public function sqlsrv($column1, $column2): string
+    {
+        return "CASE WHEN DATEPART(HOUR, $column1) = DATEPART(HOUR, $column2) 
+                  AND CAST($column1 AS DATE) = CAST($column2 AS DATE) 
+            THEN 1 ELSE 0 END";
+    }
 }

@@ -32,7 +32,12 @@ class SelectBoolean extends BaseMacro
 
     public function sqlsrv($column): string
     {
-        return "CAST(CASE WHEN $column THEN 1 ELSE 0 END AS BIT)";
+        return "CAST(CASE 
+        WHEN $column = 1 
+             OR LOWER(CAST($column AS NVARCHAR(10))) IN ('true', 't', 'yes', 'y', 'on', '1') 
+        THEN 1 
+        ELSE 0 
+    END AS BIT)";
     }
 
     public function oracle($column): string

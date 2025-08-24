@@ -23,4 +23,10 @@ class Trim extends BaseMacro
     {
         return "TRIM($column)";
     }
+
+    public function sqlsrv($column): string
+    {
+        // SQL Server 2017+ supports TRIM(), but for compatibility with older versions:
+        return "LTRIM(RTRIM($column))";
+    }
 }

@@ -34,4 +34,10 @@ class EndOfHour extends BaseMacro
         $expr = "DATETIME($column, 'start of hour', '+59 minutes', '+59 seconds')";
         return $this->formatExpression($expr, $format);
     }
+    public function sqlsrv($column, ?string $format = null): string
+    {
+        // SQL Server: Get start of hour, then add 59 minutes and 59 seconds
+        $expr = "DATETIMEFROMPARTS(YEAR($column), MONTH($column), DAY($column), DATEPART(HOUR, $column), 59, 59, 0)";
+        return $this->formatExpression($expr, $format);
+    }
 }

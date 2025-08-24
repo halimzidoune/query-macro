@@ -35,9 +35,13 @@ class DayOfWeek extends BaseMacro
         return $result;
     }
 
-    public function sqlsrv($column): string
+    public function sqlsrv($column, $map = null): string
     {
-        return "DATEPART(WEEKDAY, $column)";
+        $result = "DATEPART(WEEKDAY, $column)";
+        if($map){
+            $result = SelectCase::make()->getExpression($this->driver, $result, $map);
+        }
+        return $result;
     }
 
     public function oracle($column, $map = null): string

@@ -28,7 +28,7 @@ class Modulo extends BaseMacro
 
     public function sqlsrv($dividend, $divisor): string
     {
-        return "$dividend % $divisor";
+        return "ROUND(CAST($dividend AS DECIMAL(18,6)) - CAST($divisor AS DECIMAL(18,6)) * FLOOR(CAST($dividend AS DECIMAL(18,6)) / CAST($divisor AS DECIMAL(18,6))), 6)";
     }
 
     public function oracle($dividend, $divisor): string

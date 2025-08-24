@@ -35,7 +35,8 @@ class EndsWith extends BaseMacro
 
     public function sqlsrv($column, $value): string
     {
-        return "$column LIKE '%$value'";
+        $escapedValue = $this->escapeForSqlServer($value);
+        return "CASE WHEN $column LIKE '%$escapedValue' ESCAPE '\\' THEN 1 ELSE 0 END";
     }
 
 
@@ -60,5 +61,19 @@ class EndsWith extends BaseMacro
     protected function escapeValue($value): string
     {
         return str_replace("'", "''", $value);
+    }
+
+    /**
+     * Escape value for SQL Server LIKE pattern
+     */
+    protected function escapeForSqlServer($value): string
+    {
+        // Escape single quotes and SQL Server LIKE wildcards
+        $value = str_replace("'", "''", $value);
+        $value = str_replace('%', '\\%', $value);
+        $value = str_replace('_', '\\_', $value);
+        $value = str_replace('[', '\\[', $value);
+        $value = str_replace(']', '\\]', $value);
+        return $value;
     }
 }

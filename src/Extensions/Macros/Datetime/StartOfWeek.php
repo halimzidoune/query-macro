@@ -36,9 +36,13 @@ class StartOfWeek extends BaseMacro
 
     public function sqlsrv($column, ?string $format = null): string
     {
-        $result = "DATEADD(DAY, -(DATEPART(WEEKDAY, $column) + 2, $column)";
+        // SQL Server: DATEPART(WEEKDAY) returns 1=Sunday, 2=Monday, ..., 7=Saturday
+        // To get Monday as start of week, subtract appropriate days
+        // Formula: subtract (DATEPART(WEEKDAY) + 5) % 7 days to get to Monday
+        $result = "DATEADD(DAY, -((DATEPART(WEEKDAY, $column) + 5) % 7), $column)";
         return $this->formatExpression($result, $format);
     }
+
 
     public function oracle($column, ?string $format = null): string
     {

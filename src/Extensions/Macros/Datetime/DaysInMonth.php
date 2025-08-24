@@ -35,4 +35,10 @@ class DaysInMonth extends BaseMacro
     {
         return "FLOOR(EXTRACT(DAY FROM (DATE_TRUNC('month', $column) + INTERVAL '1 month' - INTERVAL '1 day')))::integer";
     }
+
+    public function sqlsrv($column): string
+    {
+        // SQL Server: Get last day of month using EOMONTH function
+        return "DAY(EOMONTH($column))";
+    }
 }

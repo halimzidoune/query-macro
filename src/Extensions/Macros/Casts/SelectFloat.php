@@ -45,9 +45,12 @@ class SelectFloat extends BaseMacro
         return "CAST($decimal AS DOUBLE)";
     }
 
-    public function pgsql($column, $precision = self::DEFAULT_PRECISION, $scale = 2): string
-    {
-        // Utiliser une fonction PostgreSQL qui retourne toujours float
-        return "TRUNC($column::numeric($precision,$scale) + 0.0, $scale)::double precision";
+//    public function pgsql($column, $precision = 10, $scale = 2): string
+//    {
+//        return "ROUND($column::numeric($precision, $scale), $scale)";
+//    }
+
+    public function pgsql($column, $precision = 10, $scale = 2){
+        return "CAST(CAST($column AS NUMERIC($precision,$scale)) AS DOUBLE PRECISION)";
     }
 }

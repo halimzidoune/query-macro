@@ -35,14 +35,14 @@ class Pad extends BaseMacro
         return "RPAD($column, $length, '$padString')";
     }
 
-    public function sqlsrv($column, $length, $padString = ' ', $type = 'left'): string
-    {
-        $padLen = "$length - LEN($column)";
-        $pad = "REPLICATE('$padString', $padLen)";
-        return $type === 'left'
-            ? "RIGHT($pad + $column, $length)"
-            : "LEFT($column + $pad, $length)";
-    }
+//    public function sqlsrv($column, $length, $padString = ' ', $type = 'left'): string
+//    {
+//        $padLen = "$length - LEN($column)";
+//        $pad = "REPLICATE('$padString', $padLen)";
+//        return $type === 'left'
+//            ? "RIGHT($pad + $column, $length)"
+//            : "LEFT($column + $pad, $length)";
+//    }
 
     public function oracle($column, $length, $padString = ' ', $type = 'left'): string
     {
@@ -65,6 +65,29 @@ class Pad extends BaseMacro
         return $type === 'left'
             ? $this->left($column, $length, $padString)
             : $this->right($column, $length, $padString);
+    }
+
+    public function sqlsrv($column, $length, $padString = ' ', $type = 'left'): string
+    {
+        $escapedPadString = $this->escapeValue($padString);
+        $length = (int) $length;
+
+        if ($type === 'left') {
+            return "CASE 
+                WHEN LEN(CAST($column AS NVARCHAR(MAX))) >= $length THEN LEFT(CAST($column AS NVARCHAR(MAX)), $length)
+                ELSE RIGHT(CONCAT(REPLICATE('$escapedPadString', $length), CAST($column AS NVARCHAR(MAX))), $length)
+            END";
+        } else {
+            return "CASE 
+                WHEN LEN(CAST($column AS NVARCHAR(MAX))) >= $length THEN LEFT(CAST($column AS NVARCHAR(MAX)), $length)
+                ELSE LEFT(CONCAT(CAST($column AS NVARCHAR(MAX)), REPLICATE('$escapedPadString', $length)), $length)
+            END";
+        }
+    }
+
+    protected function escapeValue($value): string
+    {
+        return str_replace("'", "''", $value);
     }
 
 }
