@@ -2,7 +2,7 @@
 
 <img src="https://github.com/halimzidoune/query-macro/blob/main/query_macro.png" width="100%" />
 
-A Laravel package that extends the Query Builder with database-agnostic SELECT macros. Transform your raw SQL expressions into readable, chainable methods that automatically generate the correct syntax for each database driver. Replace complex DB::raw() statements with intuitive methods like selectConcat(), selectDateFormat(), and selectCase() that work seamlessly across MySQL, SQLite, PostgreSQL, Oracle. ( For SQL Server not tested yet).
+A Laravel package that extends the Query Builder with database-agnostic SELECT macros. Transform your raw SQL expressions into readable, chainable methods that automatically generate the correct syntax for each database driver. Replace complex DB::raw() statements with intuitive methods like selectConcat(), selectDateFormat(), and selectCase() that work seamlessly across MySQL, SQLite, PostgreSQL, Oracle, SQL Server.
 
 ## 🚀 Features
 
