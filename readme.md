@@ -50,7 +50,7 @@ return [
 ],
 ```
 
-It's recomended to add the line in the `AppSeriveProvider@boot` for a better cast: 
+It's recomended to add this line in `AppSeriveProvider@boot` for a better cast: 
 
 ```php
 DB::connection()->getPdo()->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
